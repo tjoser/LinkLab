@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import React from "react";
 
@@ -77,7 +76,6 @@ const PrivacyPolicyPage = () => {
       </section>
     </div>
 
-<Footer />
 </>
   );
 };

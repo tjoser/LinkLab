@@ -1,55 +1,94 @@
-'use client'; // Important for using React hooks like useState in Client-side component
+'use client';
 
-import React, { useState } from "react";
-import Link from "next/link";
-import { FaBars, FaTimes } from "react-icons/fa"; // Hamburger and Close Icons
+import React from "react";
+import {
+  Navbar,
+  NavbarBrand,
+  NavbarMenuToggle,
+  NavbarMenuItem,
+  NavbarMenu,
+  NavbarContent,
+  NavbarItem,
+  Link,
+} from "@nextui-org/react";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-const Header = () => {
-  // State for mobile menu toggle
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  // Function to toggle the mobile menu
-  const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
-
+export const LinkLabLogo = () => {
   return (
-    <header className="bg-gray-800 text-white py-4">
-      <div className="container mx-auto flex justify-between items-center">
-        {/* Logo */}
-        <div className="text-2xl font-bold">
-          <Link href="/" className="hover:text-blue-500">LinkLab</Link>
-        </div>
-
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-8">
-          <Link href="/about" className="hover:text-blue-500">About</Link>
-          <Link href="/hackathons" className="hover:text-blue-500">Hackathons</Link>
-          <Link href="/talent" className="hover:text-blue-500">Talent</Link>
-      
-        </nav>
-
-        {/* Mobile Menu Button */}
-        <div className="md:hidden">
-          <button onClick={toggleMenu} className="text-2xl">
-            {isMenuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-      </div>
-
-      {/* Mobile Navigation Menu */}
-      {isMenuOpen && (
-        <div className="md:hidden mt-4">
-          <nav className="flex flex-col space-y-4">
-            <Link href="/" className="text-xl text-white hover:text-blue-500">Home</Link>
-            <Link href="/about" className="text-xl text-white hover:text-blue-500">About</Link>
-            <Link href="/hackathons" className="text-xl text-white hover:text-blue-500">Hackathons</Link>
-            <Link href="/talent" className="text-xl text-white hover:text-blue-500">Talent</Link>
-            <Link href="/privacy-policy" className="text-xl text-white hover:text-blue-500">Privacy Policy</Link>
-            <Link href="/terms-of-service" className="text-xl text-white hover:text-blue-500">Terms of Service</Link>
-          </nav>
-        </div>
-      )}
-    </header>
+    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
+      <path
+        clipRule="evenodd"
+        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
+        fill="currentColor"
+        fillRule="evenodd"
+      />
+    </svg>
   );
 };
 
-export default Header;
+export default function Header() {
+  const [isMenuOpen, setIsMenuOpen] = React.useState(false);
+
+  const menuItems = [
+    { label: "Home", href: "/" },
+    { label: "About", href: "/about" },
+    { label: "Hackathons", href: "/hackathons" },
+    { label: "Talent", href: "/talent" },
+    { label: "Privacy Policy", href: "/privacy-policy" },
+    { label: "Terms of Service", href: "/terms-of-service" },
+  ];
+
+  return (
+    <Navbar 
+      isBordered 
+      isMenuOpen={isMenuOpen} 
+      onMenuOpenChange={setIsMenuOpen} 
+      className="bg-white dark:bg-gray-800"
+    >
+      <NavbarContent className="sm:hidden" justify="start">
+        <NavbarMenuToggle aria-label={isMenuOpen ? "Close menu" : "Open menu"}>
+          {isMenuOpen ? <FaTimes /> : <FaBars />}
+        </NavbarMenuToggle>
+      </NavbarContent>
+
+      <NavbarContent className="sm:hidden pr-3" justify="center">
+        <NavbarBrand>
+          <Link href="/">
+            <LinkLabLogo />
+            <p className="font-bold text-gray-900 dark:text-white">LinkLab</p>
+          </Link>
+        </NavbarBrand>
+      </NavbarContent>
+
+      <NavbarContent className="hidden sm:flex gap-4" justify="center">
+        <NavbarBrand>
+          <Link href="/">
+            <LinkLabLogo />
+            <p className="font-bold text-gray-900 dark:text-white">LinkLab</p>
+          </Link>
+        </NavbarBrand>
+        {menuItems.slice(1, 4).map((item) => (
+          <NavbarItem key={item.href}>
+            <Link className="text-gray-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-400" href={item.href}>
+              {item.label}
+            </Link>
+          </NavbarItem>
+        ))}
+      </NavbarContent>
+
+      <NavbarMenu>
+        {menuItems.map((item) => (
+          <NavbarMenuItem key={item.href}>
+            <Link
+              className="w-full text-gray-900 dark:text-white hover:text-blue-500 dark:hover:text-blue-400"
+              href={item.href}
+              size="lg"
+            >
+              {item.label}
+            </Link>
+          </NavbarMenuItem>
+        ))}
+      </NavbarMenu>
+    </Navbar>
+  );
+}

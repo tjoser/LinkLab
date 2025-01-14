@@ -5,9 +5,10 @@ interface TalentCardProps {
   picture: string;
   skills: string[];
   rank: string;
+  category?: string; // Added category prop
 }
 
-const TalentCard: React.FC<TalentCardProps> = ({ name, picture, skills, rank }) => {
+const TalentCard: React.FC<TalentCardProps> = ({ name, picture, skills, rank, category }) => {
   return (
     <div className="bg-white shadow-lg rounded-lg overflow-hidden transform hover:scale-105 transition-all duration-300 border border-gray-200 p-6">
       {/* Talent Image */}
@@ -18,6 +19,13 @@ const TalentCard: React.FC<TalentCardProps> = ({ name, picture, skills, rank }) 
       {/* Talent Info */}
       <h3 className="text-xl font-semibold text-gray-800 text-center mb-2">{name}</h3>
       <p className="text-sm text-gray-600 text-center mb-2">Rank: {rank}</p>
+      
+      {/* Category */}
+      {category && (
+        <p className="text-sm text-gray-500 text-center mb-4">
+          Category: <span className="font-semibold">{category}</span>
+        </p>
+      )}
 
       {/* Skills List */}
       <div className="flex justify-center items-center space-x-2 mb-4">

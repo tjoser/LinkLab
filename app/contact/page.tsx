@@ -1,4 +1,4 @@
-import Form from "../../components/Form";
+import QFORM from "../../components/Form";
 
 const ContactPage = () => {
   return (
@@ -10,7 +10,7 @@ const ContactPage = () => {
           If you have any questions, partnership opportunities, or general inquiries, please reach out to us using the form below.
         </p>
       </section>
-      <Form />
+      <QFORM />
     </div>
   );
 };

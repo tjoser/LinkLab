@@ -1,4 +1,3 @@
-import Footer from "@/components/Footer";
 import HeroSection from "@/components/HeroSection";
 import React from "react";
 
@@ -65,7 +64,6 @@ const TermsOfServicePage = () => {
       </section>
     </div>
 
-<Footer />
 </>
   );
 };
