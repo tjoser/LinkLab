@@ -1,3 +1,5 @@
+'use client'; // Mark this component as a Client Component
+
 import React, { useState } from "react";
 
 const Form = () => {
@@ -39,7 +41,8 @@ const Form = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+              className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Enter your full name"
             />
           </div>
 
@@ -53,7 +56,8 @@ const Form = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+              className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Enter your email address"
             />
           </div>
 
@@ -67,7 +71,8 @@ const Form = () => {
               onChange={(e) => setMessage(e.target.value)}
               required
               rows={4}
-              className="w-full mt-1 p-2 border border-gray-300 rounded-md"
+              className="w-full mt-1 p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              placeholder="Write your message"
             />
           </div>
 
@@ -76,8 +81,8 @@ const Form = () => {
               type="submit"
               disabled={isSubmitting}
               className={`${
-                isSubmitting ? "bg-gray-400" : "bg-blue-500"
-              } text-white py-2 px-6 rounded-lg hover:bg-blue-700 transition-colors`}
+                isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-blue-600 hover:bg-blue-700"
+              } text-white py-2 px-6 rounded-lg transition-colors duration-300`}
             >
               {isSubmitting ? "Submitting..." : "Submit"}
             </button>
