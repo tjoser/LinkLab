@@ -1,6 +1,7 @@
 'use client';
 
 import React from "react";
+import Image from "next/image";
 import {
   Navbar,
   NavbarBrand,
@@ -12,19 +13,6 @@ import {
   Link,
 } from "@nextui-org/react";
 import { FaBars, FaTimes } from "react-icons/fa";
-
-export const LinkLabLogo = () => {
-  return (
-    <svg fill="none" height="36" viewBox="0 0 32 32" width="36">
-      <path
-        clipRule="evenodd"
-        d="M17.6482 10.1305L15.8785 7.02583L7.02979 22.5499H10.5278L17.6482 10.1305ZM19.8798 14.0457L18.11 17.1983L19.394 19.4511H16.8453L15.1056 22.5499H24.7272L19.8798 14.0457Z"
-        fill="currentColor"
-        fillRule="evenodd"
-      />
-    </svg>
-  );
-};
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = React.useState(false);
@@ -39,10 +27,10 @@ export default function Header() {
   ];
 
   return (
-    <Navbar 
-      isBordered 
-      isMenuOpen={isMenuOpen} 
-      onMenuOpenChange={setIsMenuOpen} 
+    <Navbar
+      isBordered
+      isMenuOpen={isMenuOpen}
+      onMenuOpenChange={setIsMenuOpen}
       className="bg-white dark:bg-gray-800"
     >
       <NavbarContent className="sm:hidden" justify="start">
@@ -54,8 +42,15 @@ export default function Header() {
       <NavbarContent className="sm:hidden pr-3" justify="center">
         <NavbarBrand>
           <Link href="/">
-            <LinkLabLogo />
-            <p className="font-bold text-gray-900 dark:text-white">LinkLab</p>
+            {/* Replace the SVG logo with the Image */}
+            <Image
+              src="/assets/logo.png" // Path to your logo file
+              alt="LinkLab Logo"
+              width={36} // Adjust width
+              height={36} // Adjust height
+              priority={true} // Ensures the logo loads quickly
+            />
+            <p className="font-bold text-gray-900 dark:text-white ml-2">LinkLab</p>
           </Link>
         </NavbarBrand>
       </NavbarContent>
@@ -63,8 +58,14 @@ export default function Header() {
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
         <NavbarBrand>
           <Link href="/">
-            <LinkLabLogo />
-            <p className="font-bold text-gray-900 dark:text-white">LinkLab</p>
+            <Image
+              src="/assets/logo.png" // Path to your logo file
+              alt="LinkLab Logo"
+              width={36} // Adjust width
+              height={36} // Adjust height
+              priority={true} // Ensures the logo loads quickly
+            />
+            <p className="font-bold text-gray-900 dark:text-white ml-2">LinkLab</p>
           </Link>
         </NavbarBrand>
         {menuItems.slice(1, 4).map((item) => (

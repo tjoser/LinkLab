@@ -1,5 +1,3 @@
-
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
@@ -28,22 +26,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-
+      <head>
+        {/* Add the favicon link here */}
+        <link rel="icon" href="/assets/logo.png" type="image/png" />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Header />
-
-
-        <main>
-        {children}
-      </main> 
-      
-      
-      
-      
-      
-      <Footer />
+        <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );
