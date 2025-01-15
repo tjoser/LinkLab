@@ -7,89 +7,75 @@ import TalentCard from "./TalentCard";
 const talents = [
   {
     name: "John Doe",
-    picture: "/assets/person.jpg", // Updated path to be relative to the public folder
+    picture: "/assets/person.jpg",
     skills: ["JavaScript", "React", "Node.js"],
     rank: "1st Place",
+    category: "Tech",
   },
   {
     name: "Jane Smith",
-    picture: "/assets/person.jpg", // Updated path to be relative to the public folder
+    picture: "/assets/person.jpg",
     skills: ["Python", "Django", "AI"],
     rank: "2nd Place",
-  },
-  {
-    name: "Mark Johnson",
-    picture: "/assets/person.jpg", // Updated path to be relative to the public folder
-    skills: ["Java", "Spring", "Docker"],
-    rank: "3rd Place",
+    category: "Tech",
   },
   {
     name: "Alice Green",
-    picture: "/assets/person.jpg", 
+    picture: "/assets/person.jpg",
     skills: ["Environmental Science", "Renewable Energy", "Sustainable Agriculture"],
     rank: "1st Place",
     category: "Sustainability",
   },
   {
-    name: "Bob White",
-    picture: "/assets/person.jpg", 
-    skills: ["Climate Change Policy", "Sustainable Urban Planning", "Eco-friendly Technologies"],
-    rank: "2nd Place",
-    category: "Sustainability",
-  },
-  {
     name: "Eve Black",
-    picture: "/assets/person.jpg", 
+    picture: "/assets/person.jpg",
     skills: ["Financial Analysis", "Investment Banking", "Cryptocurrency"],
     rank: "1st Place",
     category: "Finance",
   },
   {
-    name: "Chris Blue",
-    picture: "/assets/person.jpg", 
-    skills: ["Corporate Finance", "Stock Market Trading", "FinTech"],
-    rank: "2nd Place",
-    category: "Finance",
-  },
-  {
     name: "Dr. Emily White",
-    picture: "/assets/person.jpg", 
+    picture: "/assets/person.jpg",
     skills: ["Clinical Research", "Health Policy", "Public Health"],
     rank: "1st Place",
     category: "Healthcare",
   },
   {
-    name: "Dr. Tom Green",
-    picture: "/assets/person.jpg", 
-    skills: ["Epidemiology", "Medical Diagnostics", "Healthcare Management"],
-    rank: "2nd Place",
-    category: "Healthcare",
-  },
-  {
     name: "Sarah Brown",
-    picture: "/assets/person.jpg", 
+    picture: "/assets/person.jpg",
     skills: ["Public Policy", "International Relations", "Governance"],
     rank: "1st Place",
     category: "Policy-Making",
   },
-  {
-    name: "David Gray",
-    picture: "/assets/person.jpg", 
-    skills: ["Legislative Affairs", "Social Justice", "Public Administration"],
-    rank: "2nd Place",
-    category: "Policy-Making",
-  },
 ];
 
+const categoriesList = ["All", "Tech", "Sustainability", "Finance", "Healthcare", "Policy-Making"];
+const skillsList = ["JavaScript", "React", "Node.js", "Python", "Django", "AI", "Environmental Science", "Renewable Energy", "Sustainable Agriculture", "Financial Analysis", "Investment Banking", "Cryptocurrency", "Clinical Research", "Health Policy", "Public Health", "Public Policy", "International Relations", "Governance"];
+
 const TalentPlatformPage = () => {
-  const [selectedSkill, setSelectedSkill] = useState<string>("All");
+  const [selectedCategory, setSelectedCategory] = useState<string>("All");
+  const [selectedSkills, setSelectedSkills] = useState<string[]>([]);
 
-  const skillsList = ["All", "JavaScript", "React", "Node.js", "Python", "Django", "AI", "Java", "Spring", "Docker", "Environmental Science", "Renewable Energy", "Sustainable Agriculture", "Climate Change Policy", "Investment Banking", "FinTech", "Clinical Research", "Public Policy", "International Relations", "Epidemiology"];
+  // Toggle skill selection
+  const toggleSkill = (skill: string) => {
+    setSelectedSkills((prev) =>
+      prev.includes(skill) ? prev.filter((s) => s !== skill) : [...prev, skill]
+    );
+  };
 
-  // Filter talents based on selected skill
-  const filteredTalents = selectedSkill === "All"
-    ? talents
-    : talents.filter(talent => talent.skills.includes(selectedSkill));
+  // Clear all filters
+  const clearFilters = () => {
+    setSelectedCategory("All");
+    setSelectedSkills([]);
+  };
+
+  // Filter talents based on category and skills
+  const filteredTalents = talents.filter((talent) => {
+    const matchesCategory = selectedCategory === "All" || talent.category === selectedCategory;
+    const matchesSkills =
+      selectedSkills.length === 0 || selectedSkills.some((skill) => talent.skills.includes(skill));
+    return matchesCategory && matchesSkills;
+  });
 
   return (
     <>
@@ -98,41 +84,79 @@ const TalentPlatformPage = () => {
         <h1 className="text-4xl font-extrabold text-center text-blue-600 mb-8">LinkLab Talent Platform</h1>
 
         {/* Filter Section */}
-        <section className="mb-8 p-6 bg-gray-50 rounded-lg shadow-lg">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">Filter Talents by Skills</h2>
-          <div className="relative">
-            <select
-              className="block w-full text-lg p-3 pr-12 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
-              value={selectedSkill}
-              onChange={(e) => setSelectedSkill(e.target.value)}
+        <section className="mb-8 p-6 bg-white rounded-lg shadow-lg">
+          <div className="flex justify-between items-center mb-4">
+            <h2 className="text-2xl font-bold text-gray-800">Filters</h2>
+            <button
+              className="text-sm text-indigo-600 hover:underline"
+              onClick={clearFilters}
             >
-              <option value="All" selected>All</option>
-              {skillsList.map((skill) => (
-                <option key={skill} value={skill}>
-                  {skill}
-                </option>
-              ))}
-            </select>
-            <span className="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="currentColor" className="h-5 w-5">
-                <path fill-rule="evenodd" d="M10 14a1 1 0 01-.707-.293l-4-4a1 1 0 011.414-1.414L10 11.586l3.293-3.293a1 1 0 011.414 1.414l-4 4A1 1 0 0110 14z" clip-rule="evenodd"/>
-              </svg>
-            </span>
+              Reset Filters
+            </button>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {/* Category Filter */}
+            <div className="relative">
+              <label className="block text-lg font-medium text-gray-700 mb-1">Category</label>
+              <select
+                className="block w-full text-lg p-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+              >
+                {categoriesList.map((category) => (
+                  <option key={category} value={category}>
+                    {category}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            {/* Skill Filter */}
+            <div className="relative">
+              <label className="block text-lg font-medium text-gray-700 mb-1">Skills</label>
+              <div className="border border-gray-300 rounded-md shadow-sm p-3 max-h-40 overflow-y-auto">
+                {skillsList.map((skill) => (
+                  <div key={skill} className="flex items-center mb-2">
+                    <input
+                      type="checkbox"
+                      id={skill}
+                      value={skill}
+                      checked={selectedSkills.includes(skill)}
+                      onChange={() => toggleSkill(skill)}
+                      className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+                    />
+                    <label htmlFor={skill} className="ml-2 text-sm text-gray-800">
+                      {skill}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Talent Cards */}
         <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredTalents.map((talent) => (
-            <TalentCard
-              key={talent.name}
-              name={talent.name}
-              picture={talent.picture}
-              skills={talent.skills}
-              rank={talent.rank}
-            />
-          ))}
+          {filteredTalents.length > 0 ? (
+            filteredTalents.map((talent) => (
+              <TalentCard
+                key={talent.name}
+                name={talent.name}
+                picture={talent.picture}
+                skills={talent.skills}
+                rank={talent.rank}
+                category={talent.category}
+              />
+            ))
+          ) : (
+            <p className="text-center text-gray-600 col-span-full">
+              No talents match your selected filters.
+            </p>
+          )}
         </section>
+        <p className="text-center mt-8 text-gray-500">
+          Showing {filteredTalents.length} of {talents.length} talents.
+        </p>
       </div>
     </>
   );
